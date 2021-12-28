@@ -11,7 +11,7 @@ auto_reply_info:
   is_auto_reply: True
 
   # 是否自动回复所有好友(慎重启动！),开启后，仅仅有黑名单的成员才不会自动回复
-  is_auto_reply_all: False
+  is_auto_reply_all: True
 
   # 自动回复消息前缀（不需要则设置为空）
   auto_reply_prefix: ''
@@ -28,7 +28,7 @@ auto_reply_info:
     - '贴心小秘书'
 
   # 机器人渠道（1: 图灵机器人，2: 一个AI ,3 : 青云客，4 腾讯智能闲聊，5:天行机器人,6：海知智能，7：思知机器人)
-  bot_channel: 7
+  bot_channel: 3
 
   #图灵机器人(http://www.tuling123.com/) 实名后的用户每天免费可用 100 条。
   turing_conf:
@@ -122,11 +122,12 @@ group_helper_conf:
 
   # 白名单用户。当 is_all：Fase。只处理这个群里的消息
   group_name_white_list:
-    - '蕉群'
-    - '群机器人测试群'
-    - '小号测试群'
-    - 'EverydayWechat 交流1群'
-    - 'EverydayWechat 交流2群'
+     - '组个局'
+#    - '蕉群'
+#    - '群机器人测试群'
+#    - '小号测试群'
+#    - 'EverydayWechat 交流1群'
+#    - 'EverydayWechat 交流2群'
 
   # 黑名单用户。当 is_all ：True 。这个群里的用户不受影响。
   group_name_black_list:
@@ -154,6 +155,6 @@ group_helper_conf:
 db_config: # 请安装 mongodb 数据库
   is_open_db: True # 是否开启数据库功能
   mongodb_conf:
-    'host': 'localhost'
+    'host': '127.0.0.1'
     'port': 27017
 #   end ----------------------------------- 数据库设置 ----------------------------------- end

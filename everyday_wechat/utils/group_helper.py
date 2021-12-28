@@ -136,7 +136,7 @@ def handle_group_helper(msg):
     helps = re.findall(help_complie, text, re.I)
     if helps:
         retext = help_group_content.format(ated_name=ated_name)
-        itchat.send(retext, uuid)
+        itchat.send(retext.replace('{br}', '\r\n'), uuid)
         return
 
     # 是否是明天，用于日历，天气，星座查询
@@ -162,21 +162,21 @@ def handle_group_helper(msg):
                 city = get_city_by_uuid(ated_uuid)
             if not city:
                 retext = weather_null_msg.format(ated_name=ated_name)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
 
             _date = datetime.now().strftime('%Y-%m-%d')
             weather_info = find_weather(_date, city)
             if weather_info:
                 retext = common_msg.format(ated_name=ated_name, text=weather_info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
 
             weather_info = get_weather_info(city)
             if weather_info:
                 # print(ated_name, city, retext)
                 retext = common_msg.format(ated_name=ated_name, text=weather_info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
 
                 data = {
                     '_date': _date,
@@ -196,7 +196,7 @@ def handle_group_helper(msg):
                 return
             else:
                 retext = weather_error_msg.format(ated_name=ated_name, city=city)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
             return
 
@@ -209,7 +209,7 @@ def handle_group_helper(msg):
                 dates = re.findall(calendar_date_compile, calendar_text)
                 if not dates:
                     retext = calendar_error_msg.format(ated_name=ated_name)
-                    itchat.send(retext, uuid)
+                    itchat.send(retext.replace('{br}', '\r\n'), uuid)
                     return
 
                 _date = '{}-{:0>2}-{:0>2}'.format(*dates[0])  # 用于保存数据库
@@ -222,19 +222,19 @@ def handle_group_helper(msg):
             cale_info = find_perpetual_calendar(_date)
             if cale_info:
                 retext = common_msg.format(ated_name=ated_name, text=cale_info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
 
             # 取网络数据
             cale_info = get_rtcalendar(rt_date)
             if cale_info:
                 retext = common_msg.format(ated_name=ated_name, text=cale_info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 update_perpetual_calendar(_date, cale_info)  # 保存数据到数据库
                 return
             else:  # 查询无结果
                 retext = calendar_no_result_msg.format(ated_name=ated_name, _date=_date)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
             return
 
     # 垃圾分类查询
@@ -243,24 +243,24 @@ def handle_group_helper(msg):
             key = re.sub(rubbish_complie, '', htext, flags=re.IGNORECASE).strip()
             if not key:
                 retext = rubbish_null_msg.format(ated_name=ated_name)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
 
             _type = find_rubbish(key)
             if _type:
                 retext = rubbish_normal_msg.format(ated_name=ated_name, name=key, _type=_type)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
             _type, return_list, other = get_atoolbox_rubbish(key)
             if _type:
                 retext = rubbish_normal_msg.format(ated_name=ated_name, name=key, _type=_type)
-                itchat.send_msg(retext, uuid)
+                itchat.send_msg(retext.replace('{br}', '\r\n'), uuid)
             elif other:
                 retext = rubbish_other_msg.format(ated_name=ated_name, name=key, other=other)
-                itchat.send_msg(retext, uuid)
+                itchat.send_msg(retext.replace('{br}', '\r\n'), uuid)
             else:
                 retext = rubbish_nothing_msg.format(ated_name=ated_name, name=key)
-                itchat.send_msg(retext, uuid)
+                itchat.send_msg(retext.replace('{br}', '\r\n'), uuid)
             if return_list:
                 update_rubbish(return_list)  # 保存数据库
             return
@@ -272,7 +272,7 @@ def handle_group_helper(msg):
                 dates = re.findall(calendar_date_compile, moviebox_text)
                 if not dates:
                     retext = calendar_error_msg.format(ated_name=ated_name)
-                    itchat.send(retext, uuid)
+                    itchat.send(retext.replace('{br}', '\r\n'), uuid)
                     return
                 _date = '{}{:0>2}{:0>2}'.format(*dates[0])
             else:  # 日历 后面没有日期，则默认使用今日。
@@ -281,7 +281,7 @@ def handle_group_helper(msg):
             mb_info = find_movie_box(_date)
             if mb_info:
                 retext = common_msg.format(ated_name=ated_name, text=mb_info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
 
             is_expired = False
@@ -295,12 +295,12 @@ def handle_group_helper(msg):
             mb_info = get_maoyan_movie_box(_date, is_expired)
             if mb_info:
                 retext = common_msg.format(ated_name=ated_name, text=mb_info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 update_movie_box(_date, mb_info, is_expired)  # 保存数据到数据库
                 return
             else:  # 查询无结果
                 retext = moiebox_no_result_msg.format(ated_name=ated_name, _date=_date)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
             return
 
     # 处理订单号
@@ -314,7 +314,7 @@ def handle_group_helper(msg):
                 if not db_data['is_forced_update']:
                     info = db_data['info']
                     retext = common_msg.format(ated_name=ated_name, text=info)
-                    itchat.send(retext, uuid)
+                    itchat.send(retext.replace('{br}', '\r\n'), uuid)
                     return
                 shipper_code = db_data['shipper_code']
                 shipper_name = db_data['shipper_name']
@@ -326,7 +326,7 @@ def handle_group_helper(msg):
             if data:
                 info = data['info']
                 retext = common_msg.format(ated_name=ated_name, text=info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 update_express(data, uuid)
                 return
             else:
@@ -344,18 +344,18 @@ def handle_group_helper(msg):
                 city = get_city_by_uuid(ated_uuid)
             if not city:
                 retext = air_city_null_msg.format(ated_name=ated_name)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
 
             info = find_air_quality(city)
             if info:
                 retext = common_msg.format(ated_name=ated_name, text=info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
             info = get_air_quality(city)
             if info:
                 retext = common_msg.format(ated_name=ated_name, text=info)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
 
                 udpate_air_quality(city, info)
                 data2 = {
@@ -367,7 +367,7 @@ def handle_group_helper(msg):
                 return
             else:
                 retext = air_error_msg.format(ated_name=ated_name, city=city)
-                itchat.send(retext, uuid)
+                itchat.send(retext.replace('{br}', '\r\n'), uuid)
                 return
             return
 
@@ -376,7 +376,7 @@ def handle_group_helper(msg):
         reply_text = get_bot_info(text, ated_uuid)  # 获取自动回复
         if reply_text:  # 如内容不为空，回复消息
             reply_text = common_msg.format(ated_name=ated_name, text=reply_text)
-            itchat.send(reply_text, uuid)
+            itchat.send(reply_text.replace('{br}', '\r\n'), uuid)
             print('回复{}：{}'.format(ated_name, reply_text))
         else:
             print('自动回复失败\n')

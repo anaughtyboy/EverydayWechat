@@ -59,7 +59,7 @@ def handle_friend(msg):
             if suffix:
                 reply_text = '{}{}'.format(reply_text, suffix)
 
-            itchat.send(reply_text, toUserName=uuid)
+            itchat.send(reply_text.replace('{br}', '\r\n'), toUserName=uuid)
             print('回复{}：{}'.format(nick_name, reply_text))
         else:
             print('自动回复失败\n')

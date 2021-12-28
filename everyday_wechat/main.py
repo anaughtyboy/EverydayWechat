@@ -167,7 +167,7 @@ def send_alarm_msg(key):
     uuid_list = gf.get('uuid_list')
     for uuid in uuid_list:
         time.sleep(1)
-        itchat.send(send_msg, toUserName=uuid)
+        itchat.send(send_msg.replace('{br}', '\r\n'), toUserName=uuid)
     print('\n定时内容:\n{}\n发送成功...\n\n'.format(send_msg))
     print('自动提醒消息发送完成...\n')
 

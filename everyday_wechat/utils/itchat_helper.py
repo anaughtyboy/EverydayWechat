@@ -162,7 +162,7 @@ def set_system_notice(text):
     """
     if text:
         text = '系统通知：' + text
-        itchat.send(text, toUserName=FILEHELPER)
+        itchat.send(text.replace('{br}', '\r\n'), toUserName=FILEHELPER)
 
 
 def get_group(group_name, update=False):
